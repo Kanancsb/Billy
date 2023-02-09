@@ -1,43 +1,64 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class KeyPad : MonoBehaviour
+
+public class Keypad : MonoBehaviour
 {
-
-    public string password = "1234";
-    private string userInput = "";
-
-    public AudioClip clickSound;
-    public AudioClip openSound;
-    public AudioClip noSound;
-    AudioSource audioSource;
-
-    private void Start(){
-        
-        userInput = "";
-        audioSource = GetComponent<AudioSource> ();
-    }
     
-    public void ButtonClicked (string number){
 
-        audioSource.PlayOneShot(clickSound);
-        userInput += number;
+    public GameObject keypadOB;
+    public Animator ANI;
 
-        if(userInput.Length >= 4){
-            // check password
+    public Text textOB;
+    public string answer = "12345";
 
-            if(userInput == password){
-                // Invoke the event to play a sound
-                
-                audioSource.PlayOneShot(openSound);
+    public AudioSource button;
+    public AudioSource correct;
+    public AudioSource wrong;
+    public AudioSource WMS;
 
-            }else{
+    public bool animate;
 
-                // Play a sound
-                userInput = "";
-                audioSource.PlayOneShot(noSound);
-            }
+    void Start(){
+        keypadOB.SetActive(false);
+    }
+
+    public void Number(int number){
+        textOB.text += number.ToString();
+        button.Play();
+    }
+
+    public void Execute(){
+        if(textOB.text == answer){
+            correct.Play();
+            textOB.text = "Right";
+            WMS.Play();
+        }else{
+            wrong.Play();
+            textOB.text = "Wrong";
+        }
+    }
+
+    public void Clear(){
+        textOB.text = "";
+        button.Play();
+    }
+
+    public void Exit(){
+        keypadOB.SetActive(false);
+        Cursor.visible = false;
+    }
+
+    public void Update(){
+        if(textOB.text == "Right" && animate){
+            ANI.SetBool("open", true);
+        }
+
+        if(keypadOB.activeInHierarchy){
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
         }
     }
 }

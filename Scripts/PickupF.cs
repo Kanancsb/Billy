@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DoorOpen : MonoBehaviour
+public class PickupF : MonoBehaviour
 {
 
     public float TheDistance;
+    public GameObject turnOn;
     public GameObject ActionDisplay;
-    public GameObject TheDoor;
-    public AudioSource CreakSound;
+    public GameObject FakeF;
+    public GameObject RealF;
 
     // Update is called once per frame
     void Update(){
@@ -22,20 +23,31 @@ public class DoorOpen : MonoBehaviour
 
         if (TheDistance <= 3){
             ActionDisplay.SetActive(true);
+            ActionDisplay.SetActive (true);
         }
 
         if (Input.GetButtonDown("Action")){
             if (TheDistance <= 3){
                 this.GetComponent<BoxCollider>().enabled = false;
                 ActionDisplay.SetActive(false);
-                TheDoor.GetComponent<Animation>().Play("DoorAnim");
-                CreakSound.Play();
+                FakeF.SetActive(false);
+                RealF.SetActive(true);
+                StartCoroutine (flashlightOn());
+
             }
         } 
     }
 
     void OnMouseExit(){
-
         ActionDisplay.SetActive(false);
+        
     }
+
+    IEnumerator flashlightOn (){
+        turnOn.SetActive(true);
+        yield return new WaitForSeconds (5);
+        turnOn.SetActive(false);
+
+    }
+
 }
