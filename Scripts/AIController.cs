@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
+
 public class AIController : MonoBehaviour
 {
     public NavMeshAgent navMeshAgent;               //  Nav mesh agent component
@@ -225,6 +227,12 @@ public class AIController : MonoBehaviour
                  * */
                 m_PlayerPosition = player.transform.position;       //  Save the player's current position if the player is in range of vision
             }
+        }
+    }
+
+    void OnTriggerEnter(Collider other){
+        if(other.gameObject.tag == "Player"){
+            SceneManager.LoadScene("MainMenu");
         }
     }
 }

@@ -1,39 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class OpenKeypad : MonoBehaviour
+public class NextScene : MonoBehaviour
 {
-
-    public GameObject keypadOB;
-    public GameObject keypadText;
-
-    public AudioSource sound;
-
+    public GameObject leaveText;
+    
     public bool inReach;
 
     void Start(){
         inReach = false;
+        
     }
 
     void OnTriggerEnter(Collider other){
         if(other.gameObject.tag == "Reach"){
             inReach = true;
-            keypadText.SetActive(true);
+            leaveText.SetActive(true);
         }
     }
 
     void OnTriggerExit(Collider other){
         if(other.gameObject.tag == "Reach"){
             inReach = false;
-            keypadText.SetActive(false);
+            leaveText.SetActive(false);
         }
     }
 
+    // Update is called once per frame
     void Update(){
-        if(Input.GetButtonDown("Action") && inReach){
-            sound.Play();
-            keypadOB.SetActive(true);
-        }      
+        if(inReach && Input.GetButtonDown("Action")){
+            SceneManager.LoadScene("MainMenu");
+        }
     }
 }

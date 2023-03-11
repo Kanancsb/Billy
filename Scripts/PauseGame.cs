@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseGame : MonoBehaviour
 {
@@ -8,6 +9,9 @@ public class PauseGame : MonoBehaviour
     public GameObject menu;
     public GameObject resume;
     public GameObject quit;
+    public GameObject mainMenu;
+    
+    public AudioSource buttonSound;
 
     public bool on;
     public bool off;
@@ -36,6 +40,7 @@ public class PauseGame : MonoBehaviour
     }
 
     public void Resume(){
+        buttonSound.Play();
         Time.timeScale = 1;
         menu.SetActive(false);
         off = true;
@@ -43,7 +48,14 @@ public class PauseGame : MonoBehaviour
         Cursor.visible = false;
     }
 
+    public void MainMenu(){
+        buttonSound.Play();
+        SceneManager.LoadScene("MainMenu");
+
+    }
+
     public void Exit(){
+        buttonSound.Play();
         Application.Quit();
     }
 }

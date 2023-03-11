@@ -4,10 +4,7 @@ using UnityEngine;
 
 public class Note : MonoBehaviour
 {
-    
     public GameObject noteOB;
-    
-    public AudioSource pickup;
 
     void Start(){
         noteOB.SetActive(false);
@@ -25,3 +22,4 @@ public class Note : MonoBehaviour
         }
     }
 }
+
